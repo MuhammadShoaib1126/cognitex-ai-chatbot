@@ -38,7 +38,8 @@ function App() {
     setLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:8000/chat', { message: input });
+      // UPDATED: Uses Environment Variable + '/chat'
+      const res = await axios.post(process.env.REACT_APP_API_URL + '/chat', { message: input });
       setChat(prev => [...prev, { role: 'assistant', content: res.data.reply }]);
     } catch {
       setChat(prev => [...prev, { role: 'assistant', content: 'Error. Try again.' }]);
@@ -54,7 +55,8 @@ function App() {
 
   const clearChat = async () => {
     try {
-      await axios.post('http://localhost:8000/clear');
+      // UPDATED: Uses Environment Variable + '/clear'
+      await axios.post(process.env.REACT_APP_API_URL + '/clear');
     } catch (error) {
       console.error('Error clearing backend history:', error);
     }
@@ -74,7 +76,6 @@ function App() {
         @keyframes glow { 0% { text-shadow: 0 0 10px rgba(196, 156, 40, 0.15); } 50% { text-shadow: 0 0 20px rgba(196, 156, 40, 0.3); } 100% { text-shadow: 0 0 10px rgba(196, 156, 40, 0.15); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Code block styling */
         pre {
           background: #0a0a0a !important;
           border: 1px solid #222 !important;
